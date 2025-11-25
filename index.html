@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>H446 Big-O Crossword</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #fffbe6;         /* pale yellow */
+      --grid-border: #333;
+      --cell-size: 2.6rem;
+      --correct: #c5f7c5;
+      --text: #222;
+      --black: #000;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    h1 {
+      margin-bottom: 0.2rem;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1200px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .grid-container {
+      border: 3px solid var(--grid-border);
+      padding: 0.25rem;
+      background: white;
+    }
+
+    .crossword-grid {
+      display: grid;
+      grid-template-columns: repeat(13, var(--cell-size));
+      grid-template-rows: repeat(13, var(--cell-size));
+      gap: 1px;
+      background: var(--grid-border);
+    }
+
+    .cell {
+      background: white;
+      position: relative;
+    }
+
+    .cell.black {
+      background: var(--black);
+    }
+
+    .cell input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: transparent;
+      outline: none;
+    }
+
+    .cell input.correct {
+      background: var(--correct);
+    }
+
+    .cell input.incorrect {
+      background: #ffd6d6;
+    }
+
+    .cell .number {
+      position: absolute;
+      top: 1px;
+      left: 2px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #555;
+      pointer-events: none;
+    }
+
+    .side-panel {
+      max-width: 420px;
+      flex: 1 1 320px;
+    }
+
+    .clue-list {
+      background: white;
+      border: 2px solid var(--grid-border);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+    }
+
+    .clue-list p {
+      margin: 0.2rem 0;
+      line-height: 1.3;
+    }
+
+    .meta {
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+      color: #555;
+    }
+
+    button.check-btn {
+      margin-top: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--grid-border);
+      background: #f5f5f5;
+      border-radius: 0.4rem;
+      cursor: pointer;
+    }
+
+    button.check-btn:hover {
+      background: #e9e9e9;
+    }
+
+    .status {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 0.75rem;
+      }
+      .wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>H446 Big-O Crossword</h1>
+  <p class="meta">OCR A Level Computer Science – Algorithmic complexity practice</p>
+
+  <div class="wrapper">
+    <!-- GRID -->
+    <div class="grid-container">
+      <div id="grid" class="crossword-grid" aria-label="Big-O crossword grid"></div>
+    </div>
+
+    <!-- CLUES -->
+    <div class="side-panel">
+      <h2>Across</h2>
+      <div class="clue-list">
+        <p><strong>1.</strong> Time grows directly with input size n.</p>
+        <p><strong>2.</strong> Time does not change as n increases.</p>
+        <p><strong>3.</strong> Time roughly doubles with each extra input item (e.g. O(2<sup>n</sup>)).</p>
+        <p><strong>4.</strong> Time grows like log<sub>2</sub>(n), often by repeatedly halving the problem.</p>
+        <p><strong>5.</strong> Time grows slower than n but faster than constant.</p>
+        <p><strong>6.</strong> Scenario where an algorithm performs at its fastest.</p>
+      </div>
+
+      <button class="check-btn" id="checkBtn">Check all answers</button>
+      <div class="status" id="status"></div>
+
+      <p class="meta">
+        Words used: LINEAR, CONSTANT, EXPONENTIAL, LOGARITHMIC, SUBLINEAR, BEST CASE.
+        All answers should be entered with no spaces.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    /*
+      Simple 13x13 crossword-style grid.
+      Letters = actual cells to fill.
+      '#'    = black square.
+      We’re only using Across words here.
+    */
+
+    const gridLayout = [
+      // 13 columns each row
+      // 1: LINEAR (1 Across)
+      "LINEAR#######",
+      // 2: CONSTANT (2 Across)
+      "CONSTANT#####",
+      // 3: EXPONENTIAL (3 Across)
+      "EXPONENTIAL##",
+      // 4: LOGARITHMIC (4 Across)
+      "LOGARITHMIC##",
+      // 5: SUBLINEAR (5 Across)
+      "SUBLINEAR####",
+      // 6: BESTCASE (6 Across)
+      "BESTCASE#####",
+      // Remaining rows just black to make it look like a full crossword
+      "#############",
+      "#############",
+      "#############",
+      "#############",
+      "#############",
+      "#############",
+      "#############"
+    ];
+
+    // Numbering starts at beginning of each across word in this simple layout
+    const acrossNumbers = {
+      "0,0": 1, // row 0, col 0  -> LINEAR
+      "1,0": 2, // CONSTANT
+      "2,0": 3, // EXPONENTIAL
+      "3,0": 4, // LOGARITHMIC
+      "4,0": 5, // SUBLINEAR
+      "5,0": 6  // BESTCASE
+    };
+
+    const gridEl = document.getElementById("grid");
+    const statusEl = document.getElementById("status");
+
+    function createGrid() {
+      gridLayout.forEach((rowString, r) => {
+        rowString.split("").forEach((ch, c) => {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+
+          if (ch === "#") {
+            cell.classList.add("black");
+          } else {
+            const input = document.createElement("input");
+            input.maxLength = 1;
+            input.dataset.solution = ch.toUpperCase();
+            input.setAttribute("aria-label", `Row ${r + 1}, Column ${c + 1}`);
+            input.addEventListener("input", (e) => {
+              const val = e.target.value.toUpperCase();
+              e.target.value = val; // force uppercase
+              if (!val) {
+                e.target.classList.remove("correct", "incorrect");
+                return;
+              }
+              if (val === e.target.dataset.solution) {
+                e.target.classList.add("correct");
+                e.target.classList.remove("incorrect");
+              } else {
+                e.target.classList.add("incorrect");
+                e.target.classList.remove("correct");
+              }
+            });
+            cell.appendChild(input);
+
+            // Add numbering if this is a start of an across word
+            const key = `${r},${c}`;
+            if (acrossNumbers[key]) {
+              const num = document.createElement("div");
+              num.classList.add("number");
+              num.textContent = acrossNumbers[key];
+              cell.appendChild(num);
+            }
+          }
+
+          gridEl.appendChild(cell);
+        });
+      });
+    }
+
+    function checkAll() {
+      const inputs = gridEl.querySelectorAll("input");
+      let correctCount = 0;
+      let total = 0;
+
+      inputs.forEach((input) => {
+        total++;
+        const val = (input.value || "").toUpperCase();
+        const sol = input.dataset.solution;
+        if (val === sol) {
+          input.classList.add("correct");
+          input.classList.remove("incorrect");
+          correctCount++;
+        } else {
+          if (val) {
+            input.classList.add("incorrect");
+            input.classList.remove("correct");
+          } else {
+            input.classList.remove("correct", "incorrect");
+          }
+        }
+      });
+
+      if (correctCount === total) {
+        statusEl.textContent = `Perfect! ${correctCount}/${total} letters correct.`;
+      } else {
+        statusEl.textContent = `${correctCount}/${total} letters correct so far.`;
+      }
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", checkAll);
+
+    createGrid();
+  </script>
+</body>
+</html>
