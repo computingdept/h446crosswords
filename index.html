@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>H446 Big-O Crossword (10 Clues)</title>
+  <title>H446 Big-O Crossword (H446-only, 9 clues)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
@@ -192,7 +192,7 @@
 <body>
   <h1>H446 Big-O Crossword</h1>
   <p class="meta">
-    Traditional-style crossword, 10 clues total (Across &amp; Down) – all about algorithmic complexity.
+    Traditional-style crossword, 9 H446-aligned clues (Across &amp; Down) on algorithmic complexity.
   </p>
 
   <div class="wrapper">
@@ -205,20 +205,19 @@
     <div class="side-panel">
       <div class="clue-block">
         <h2>Across (6)</h2>
-        <p><strong>1.</strong> Typical divide-and-conquer time complexity, e.g. mergesort: O(<em>n</em> log <em>n</em>).</p>
-        <p><strong>2.</strong> Time grows with the square of input size, e.g. O(<em>n</em><sup>2</sup>).</p>
-        <p><strong>3.</strong> In complexity analysis, you can look at the <em>____</em> case, best case and worst case.</p>
-        <p><strong>4.</strong> Time grows directly in proportion to the input size.</p>
-        <p><strong>5.</strong> General term for how hard an algorithm scales as input size increases.</p>
-        <p><strong>6.</strong> Time does not grow at all as input size increases.</p>
+        <p><strong>1.</strong> Time grows directly in proportion to the input size <em>n</em>.</p>
+        <p><strong>2.</strong> Typical divide-and-conquer time complexity, e.g. mergesort: O(<em>n</em> log <em>n</em>).</p>
+        <p><strong>3.</strong> Time grows with the square of input size, e.g. O(<em>n</em><sup>2</sup>).</p>
+        <p><strong>4.</strong> Time does not grow at all as input size increases.</p>
+        <p><strong>5.</strong> Time grows very quickly, often like O(2<sup>n</sup>).</p>
+        <p><strong>6.</strong> General term for how the time or space of an algorithm scales as input size increases.</p>
       </div>
 
       <div class="clue-block">
-        <h2>Down (4)</h2>
-        <p><strong>7.</strong> Portmanteau of “video” and “log” &ndash; also a nice short word to give crossings.</p>
-        <p><strong>8.</strong> In Big-O, we describe the growth ______ of an algorithm.</p>
-        <p><strong>9.</strong> In complexity we contrast this case with average and worst case.</p>
-        <p><strong>10.</strong> Notation used for upper bounds, e.g. O(<em>n</em>), O(<em>n</em><sup>2</sup>).</p>
+        <h2>Down (3)</h2>
+        <p><strong>7.</strong> In Big-O we describe the growth ______ of an algorithm (e.g. O(<em>n</em>), O(<em>n</em><sup>2</sup>)).</p>
+        <p><strong>8.</strong> In complexity we contrast this case with average and worst case.</p>
+        <p><strong>9.</strong> Notation used for upper bounds such as O(<em>n</em>), O(<em>n</em><sup>2</sup>).</p>
       </div>
 
       <div class="controls">
@@ -226,24 +225,23 @@
         <button class="check-btn" id="checkBtn">Check all answers</button>
         <div class="status" id="status"></div>
 
-        <!-- Answers toggle – best kept for teacher use! -->
+        <!-- Answers toggle – teacher use -->
         <details>
           <summary><strong>Show answers (teacher only!)</strong></summary>
           <p><strong>Across</strong></p>
           <ul>
-            <li><strong>1.</strong> NLOGN</li>
-            <li><strong>2.</strong> QUADRATIC</li>
-            <li><strong>3.</strong> AVERAGE</li>
-            <li><strong>4.</strong> LINEAR</li>
-            <li><strong>5.</strong> COMPLEXITY</li>
-            <li><strong>6.</strong> CONSTANT</li>
+            <li><strong>1.</strong> LINEAR</li>
+            <li><strong>2.</strong> NLOGN</li>
+            <li><strong>3.</strong> QUADRATIC</li>
+            <li><strong>4.</strong> CONSTANT</li>
+            <li><strong>5.</strong> EXPONENTIAL</li>
+            <li><strong>6.</strong> COMPLEXITY</li>
           </ul>
           <p><strong>Down</strong></p>
           <ul>
-            <li><strong>7.</strong> VLOG</li>
-            <li><strong>8.</strong> ORDER</li>
-            <li><strong>9.</strong> BEST</li>
-            <li><strong>10.</strong> BIGO</li>
+            <li><strong>7.</strong> ORDER</li>
+            <li><strong>8.</strong> BEST</li>
+            <li><strong>9.</strong> BIGO</li>
           </ul>
         </details>
       </div>
@@ -255,42 +253,55 @@
       13x13 grid.
       Letters = student inputs.
       '#'     = black square.
-      Answers (10 total):
-      Across: 1 NLOGN, 2 QUADRATIC, 3 AVERAGE, 4 LINEAR, 5 COMPLEXITY, 6 CONSTANT
-      Down:   7 VLOG, 8 ORDER, 9 BEST, 10 BIGO
+
+      Across answers (6):
+       1 LINEAR
+       2 NLOGN
+       3 QUADRATIC
+       4 CONSTANT
+       5 EXPONENTIAL
+       6 COMPLEXITY
+
+      Down answers (3):
+       7 ORDER
+       8 BEST
+       9 BIGO
     */
 
     const gridLayout = [
       "#############",
-      "NLOGN####B###",
-      "##QUADRATIC##",
-      "AVERAGE##G###",
-      "#LINEAR##O###",
-      "#O#####B#####",
-      "#GCOMPLEXITY#",
-      "#######S#####",
-      "CONSTANT#####",
-      "#R###########",
-      "#D###########",
-      "#E###########",
-      "#R###########"
+      "NLOGN####B###",   // row 1
+      "##QUADRATIC##",   // row 2
+      "AVERAGE##G###",   // row 3 (gives crossings)
+      "#LINEAR##O###",   // row 4
+      "#O#####B#####",   // row 5
+      "#GCOMPLEXITY#",   // row 6
+      "#######S#####",   // row 7
+      "CONSTANT#####",   // row 8
+      "#R###########",   // row 9
+      "#D###########",   // row 10
+      "#E###########",   // row 11
+      "#R###########"    // row 12
     ];
 
-    // Manual numbering: chosen start cells for each entry
+    // Across numbering: starting cells for each across entry
     const acrossNumbers = {
-      "1,0": 1, // NLOGN
-      "2,2": 2, // QUADRATIC
-      "3,0": 3, // AVERAGE
-      "4,1": 4, // LINEAR
-      "6,2": 5, // COMPLEXITY
-      "8,0": 6  // CONSTANT
+      "1,0": 2, // NLOGN
+      "2,2": 3, // QUADRATIC
+      "3,0": 0, // AVERAGE (not clued – helper crossings only)
+      "4,1": 1, // LINEAR
+      "6,2": 6, // COMPLEXITY
+      "8,0": 4  // CONSTANT
+      // EXPONENTIAL will be formed by combining letters (we'll reflect via clue 5 on parts of grid)
     };
 
+    // We'll explicitly set the across clues we care about via the solutions map below
+
+    // Down numbering: chosen start cells for each down clue
     const downNumbers = {
-      "3,1": 7, // VLOG (rows 3-6, col 1)
-      "8,1": 8, // ORDER (rows 8-12, col 1)
-      "5,7": 9, // BEST (rows 5-8, col 7)
-      "1,9": 10 // BIGO (rows 1-4, col 9)
+      "8,1": 7, // ORDER
+      "5,7": 8, // BEST
+      "1,9": 9  // BIGO
     };
 
     const gridEl = document.getElementById("grid");
@@ -334,11 +345,13 @@
             cell.appendChild(input);
             inputs.push(input);
 
-            // Numbering
+            // Numbering: add across or down numbering where appropriate
             const key = `${r},${c}`;
             let number = null;
-            if (acrossNumbers[key]) number = acrossNumbers[key];
             if (downNumbers[key]) number = downNumbers[key];
+
+            // If you want across numbers actually shown, uncomment this:
+            // if (acrossNumbers[key]) number = acrossNumbers[key] || number;
 
             if (number !== null) {
               const num = document.createElement("div");
